@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+    Domain
+{% endblock %}
+{% block content %}
+<div>
+{% if domain_list %}
+    <ul>
+    {% for domain  in domain_list %}
+    <li>  {{domain.name}} - {{domain.is_deleted}} - {{domain.updated_on}} - {{domain.updated_by}} </li{>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No domain available.</p>
+{% endif %}   
+</div>
+
+{% endblock %}

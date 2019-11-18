@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+
+# from .models import (
+#         Property,
+#         Domain
+# )
+
+# admin.site.register(Property)
+# admin.site.register(Domain)
