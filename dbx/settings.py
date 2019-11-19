@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'servers.apps.ServersConfig',
+    'server.apps.ServerConfig',
     'property.apps.PropertyConfig',
     'domain.apps.DomainConfig',
 

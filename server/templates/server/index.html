@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}
+    Server
+{% endblock %}
+{% block content %}
+<div>
+{% if server_list %}
+    <ul>
+    {% for server  in server_list %}
+    <li>  {{server.name}} - {{server.ip_address}} - {{server.is_deleted}} - {{server.updated_on}} - {{server.updated_by}} </li{>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No server available.</p>
+{% endif %}   
+</div>
+
+{% endblock %}
