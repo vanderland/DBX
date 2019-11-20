@@ -7,7 +7,7 @@
 {% if domain_list %}
     <ul>
     {% for domain  in domain_list %}
-    <li>  {{domain.name}} - {{domain.is_deleted}} - {{domain.updated_on}} - {{domain.updated_by}} </li{>
+        <li><a href="{% url 'domain_all' %}{{ domain.id }}" >{{domain.name}}</a></li>
     {% endfor %}
     </ul>
 {% else %}

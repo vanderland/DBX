@@ -33,10 +33,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'server.apps.ServerConfig',
-    'property.apps.PropertyConfig',
-    'domain.apps.DomainConfig',
 
-
+    # 'view_breadcrumbs',
+  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
