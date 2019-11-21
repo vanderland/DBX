@@ -1,8 +1,8 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block title %}
     Property
 {% endblock %}
-{% block content %}
+{% block panel_left %}
 <div>
 {% if property_list %}
     <ul>
@@ -15,4 +15,4 @@
 {% endif %}   
 </div>
 
-{% endblock %}
+{% endblock panel_left %}
