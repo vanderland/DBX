@@ -1,18 +1,26 @@
 {% extends "base.html" %}
-{% block title %}
-    Property
-{% endblock %}
-{% block panel_left %}
-<div>
-{% if property_list %}
-    <ul>
-    {% for property  in property_list %}
-        <li><a href="{% url 'property_all' %}{{ property.id }}" >{{property.name}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No property available.</p>
-{% endif %}   
-</div>
+{% block title %}Property{% endblock title%}
 
-{% endblock panel_left %}
+{% block ga_head %}
+  <h5 class="mb-0">Property</h5>
+{% endblock ga_head %}
+
+
+{% block ga_menu %}
+    {% if property_list %}
+      <ul class="nav">
+          {% for property in property_list %}
+                <li class="nav-item">
+                  <a class="nav-link p-0 active"href="{% url 'property_all' %}{{ property.id }}" class="">{{property.name}}</a>
+              </li>
+          {% endfor %}
+      </ul>
+    {% else %}
+        <p>No server available.</p>
+    {% endif %}   
+{% endblock ga_menu %}
+
+{% block ga_main %}
+
+{% endblock ga_main %}
+

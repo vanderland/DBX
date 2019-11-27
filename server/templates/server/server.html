@@ -1,44 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Server{% endblock title%}
 
-{% block panel_top %}
-    <li class="breadcrumb-item"><a href="{% url 'server_all' %}">Home</a></li>
-    <li class="breadcrumb-item active"><a href="#">Server</a></li>
-{% endblock panel_top %}
+{% block ga_head %}
+  <h5 class="mb-0">Server</h5>
+{% endblock ga_head %}
 
 
-{% block panel_left %}
+{% block ga_menu %}
     {% if server_list %}
-        {% comment %} <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        </button> {% endcomment %}
-            <ul class="nav">
-                {% for server in server_list %}
-                    <li>
-                        <a class="nav-link py-0" href="{% url 'server_all' %}">
-                            {{server.name}}  
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-
-
-        {% comment %} <div class="">
-            {% for server in server_list %}
-               <p><a href="{% url 'server_all' %}{{ server.id }}" class="">{{server.name}}</a> </p>
-            {% endfor %} {% endcomment %}
-        </div>
-        {% comment %} <div class="list-group" id="list-tab" role="tablist">
-            {% for server in server_list %}
-                <a href="{% url 'server_all' %}{{ server.id }}" class="list-group-item list-group-item-action py-1 px-1">{{server.name}}</a>
-            {% endfor %}
-        </div> {% endcomment %}
+      <ul class="nav flex-column">
+          {% for server in server_list %}
+                <li class="nav-item">
+                  <a class="nav-link p-0 active"href="{% url 'server_all' %}{{ server.id }}" class="">{{server.name}}</a>
+              </li>
+          {% endfor %}
+      </ul>
     {% else %}
         <p>No server available.</p>
     {% endif %}   
-{% endblock panel_left %}
+{% endblock ga_menu %}
 
-{% block panel_right %}
-  <table class="table table-bordered">
+{% block ga_main %}
+<table class="table table-borderless">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -67,10 +50,5 @@
     </tr>
   </tbody>
 </table>
-{% endblock panel_right %}
+{% endblock ga_main %}
 
-{% block panel_bottom %}
-<div class="alert alert-warning" role="alert">
-  A simple warning alert—check it out!
-</div>
-{% endblock panel_bottom %}

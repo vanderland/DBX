@@ -1,0 +1,57 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
+.gd_navbar {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: ga_navbar;
+}
+
+.gd_head {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: ga_head;
+  border-bottom: 1px solid #343a40;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.gd_message {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: ga_message;
+  border-bottom: 1px solid #343a40;
+}
+
+.gd_menu {
+  -ms-grid-row: 4;
+  -ms-grid-column: 1;
+  grid-area: ga_menu;
+  padding: 10px;
+  border-right: 1px solid #343a40;
+  min-height: 900px;
+}
+
+.gd_main {
+  -ms-grid-row: 4;
+  -ms-grid-column: 2;
+  grid-area: ga_main;
+  padding: 10px;
+}
+
+.grid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 5fr;
+      grid-template-columns: 1fr 5fr;
+      grid-template-areas: 'ga_navbar  ga_navbar' 'ga_head    ga_head' 'ga_message ga_message' 'ga_menu    ga_main';
+}
+/*# sourceMappingURL=main.css.map */

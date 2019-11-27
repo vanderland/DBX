@@ -1,17 +1,26 @@
 {% extends "base.html" %}
-{% block title %}
-    Domain
-{% endblock %}
-{% block panel_left %}
-{% if domain_list %}
-    {% for domain  in domain_list %}
-        
-    <div class="list-group" id="list-tab" role="tablist">
-      <a href="{% url 'domain_all' %}{{ domain.id }}" class="list-group-item list-group-item-action py-0">{{domain.name}}</a>
-    </div>
-    {% endfor %}
-{% else %}
-    <p>No domain available.</p>
-{% endif %}   
+{% block title %}Domain{% endblock title%}
 
-{% endblock panel_left %}
+{% block ga_head %}
+  <h5 class="mb-0">Domain</h5>
+{% endblock ga_head %}
+
+
+{% block ga_menu %}
+    {% if domain_list %}
+      <ul class="nav">
+          {% for domain in domain_list %}
+                <li class="nav-item">
+                  <a class="nav-link p-0 active"href="{% url 'domain_all' %}{{ domain.id }}" class="">{{domain.name}}</a>
+              </li>
+          {% endfor %}
+      </ul>
+    {% else %}
+        <p>No server available.</p>
+    {% endif %}   
+{% endblock ga_menu %}
+
+{% block ga_main %}
+
+{% endblock ga_main %}
+

@@ -1,7 +1,28 @@
+import pymssql
+
+
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
+from django.contrib import messages
+from django.views.generic import ListView, DetailView
 from .models import Server, Domain, Property
+
+
+def ServerDetail(request, pk):
+    qs_server = Server.objects.filter(pk=pk)
+
+    server = str(qs_server[0])
+    database = 'STOF_DBA'
+    try:
+        conn = pymssql.connect(server=server, database=database, as_dict=True)
+        cursor = conn.cursor()
+        cursor.execute('SELECT @@VERSION as version;')
+        results = cursor.fetchall()
+        return render(request, 'server/server_detail.html', context={'pk': pk, 'server': server, 'results': results},)
+    except Exception as err:
+        messages.error(request, str(err))
+        # messages.error(request, 'server not found!!!')
+        return render(request, 'server/server_detail.html', context={'pk': pk, 'server': server},)
 
 
 class ServerViewAll(ListView):
@@ -28,8 +49,29 @@ class ServerViewByProperty(ListView):
 
     def get_queryset(self):
         self.property = get_object_or_404(Property, id=self.kwargs['pk'])
-        print(self.property)
-        return Server.objects.filter(property=self.property)        
+        return Server.objects.filter(property=self.property)
+
+
+class ServerDetailView(DetailView):
+    model = Server
+    # template_name = 'server/server_detail.html'
+    # context_object_name = 'server_detail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['server'] = Server.objects.filter(pk=self.object.pk)
+
+        server = 'SG10-DBAOPS-01'
+        database = 'STOF_DBA'
+        conn = pymssql.connect(server=server, database=database, as_dict=True)
+
+        cursor = conn.cursor()
+        cursor.execute(
+            'SELECT [Log_ID], [Log_Date], [Log_Source], [Log_Status], [Log_Message] FROM [log].[VDS_Archive_Log];')
+
+        results = cursor.fetchall()
+        # return render(request, 'server/server_detail.html', context={'results': results},)
+        return results
 
 
 class DomainViewAll(ListView):
