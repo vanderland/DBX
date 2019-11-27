@@ -8,7 +8,7 @@
 
 {% block ga_menu %}
     {% if domain_list %}
-      <ul class="nav">
+      <ul class="nav flex-column">
           {% for domain in domain_list %}
                 <li class="nav-item">
                   <a class="nav-link p-0 active"href="{% url 'domain_all' %}{{ domain.id }}" class="">{{domain.name}}</a>

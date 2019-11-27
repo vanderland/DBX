@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.views.generic import ListView, DetailView
-from .models import Server, Domain, Property
+from .models import Server, Domain, Property, Application
 
 
 def ServerDetail(request, pk):
@@ -20,7 +20,7 @@ def ServerDetail(request, pk):
         results = cursor.fetchall()
         return render(request, 'server/server_detail.html', context={'pk': pk, 'server': server, 'results': results},)
     except Exception as err:
-        messages.error(request, str(err))
+        messages.error(request, str(err), extra_tags='error')
         # messages.error(request, 'server not found!!!')
         return render(request, 'server/server_detail.html', context={'pk': pk, 'server': server},)
 
@@ -49,7 +49,16 @@ class ServerViewByProperty(ListView):
 
     def get_queryset(self):
         self.property = get_object_or_404(Property, id=self.kwargs['pk'])
-        return Server.objects.filter(property=self.property)
+        return Server.objects.filter(property=self.property).order_by('name')
+
+
+class ServerViewByApplication(ListView):
+    template_name = 'server/server.html'
+    context_object_name = 'server_list'
+
+    def get_queryset(self):
+        self.application = get_object_or_404(Application, id=self.kwargs['pk'])
+        return Server.objects.filter(application=self.application).order_by('name')
 
 
 class ServerDetailView(DetailView):
@@ -72,6 +81,14 @@ class ServerDetailView(DetailView):
         results = cursor.fetchall()
         # return render(request, 'server/server_detail.html', context={'results': results},)
         return results
+
+
+class ApplicationViewAll(ListView):
+    template_name = 'server/application.html'
+    context_object_name = 'application_list'
+
+    def get_queryset(self):
+        return Application.objects.all()
 
 
 class DomainViewAll(ListView):

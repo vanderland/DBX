@@ -25,14 +25,13 @@ body {
 
 .gd_message {
   -ms-grid-row: 3;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
+  -ms-grid-column: 2;
   grid-area: ga_message;
-  border-bottom: 1px solid #343a40;
 }
 
 .gd_menu {
-  -ms-grid-row: 4;
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: ga_menu;
   padding: 10px;
@@ -45,6 +44,7 @@ body {
   -ms-grid-column: 2;
   grid-area: ga_main;
   padding: 10px;
+  min-height: 900px;
 }
 
 .grid-container {
@@ -52,6 +52,13 @@ body {
   display: grid;
   -ms-grid-columns: 1fr 5fr;
       grid-template-columns: 1fr 5fr;
-      grid-template-areas: 'ga_navbar  ga_navbar' 'ga_head    ga_head' 'ga_message ga_message' 'ga_menu    ga_main';
+      grid-template-areas: 'ga_navbar  ga_navbar' 'ga_head    ga_head' 'ga_menu    ga_message' 'ga_menu    ga_main';
+}
+
+.message {
+  border-bottom: 1px solid #343a40;
+  padding: 10px;
+  color: #856404;
+  background-color: #fff3cd;
 }
 /*# sourceMappingURL=main.css.map */

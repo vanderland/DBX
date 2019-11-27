@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-{% block title %}Property{% endblock title%}
+{% block title %}Application{% endblock title%}
 
 {% block ga_head %}
-  <h5 class="mb-0">Property</h5>
+  <h5 class="mb-0">Application</h5>
 {% endblock ga_head %}
 
 
 {% block ga_menu %}
-    {% if property_list %}
+    {% if application_list %}
       <ul class="nav flex-column">
-          {% for property in property_list %}
+          {% for application in application_list %}
                 <li class="nav-item">
-                  <a class="nav-link p-0 active"href="{% url 'property_all' %}{{ property.id }}" class="">{{property.name}}</a>
+                  <a class="nav-link p-0 active"href="{% url 'application_all' %}{{ application.id }}" class="">{{application.name}}</a>
               </li>
           {% endfor %}
       </ul>
