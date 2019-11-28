@@ -36,7 +36,6 @@ body {
   grid-area: ga_menu;
   padding: 10px;
   border-right: 1px solid #343a40;
-  min-height: 900px;
 }
 
 .gd_main {
@@ -44,15 +43,17 @@ body {
   -ms-grid-column: 2;
   grid-area: ga_main;
   padding: 10px;
-  min-height: 900px;
 }
 
 .grid-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 5fr;
-      grid-template-columns: 1fr 5fr;
+  -ms-grid-rows: 56px 44px 44px auto;
+      grid-template-rows: 56px 44px 44px auto;
+  -ms-grid-columns: 170px 5fr;
+      grid-template-columns: 170px 5fr;
       grid-template-areas: 'ga_navbar  ga_navbar' 'ga_head    ga_head' 'ga_menu    ga_message' 'ga_menu    ga_main';
+  height: 100vh;
 }
 
 .message {

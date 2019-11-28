@@ -8,6 +8,7 @@ class Application(models.Model):
     updated_on = models.DateTimeField(verbose_name='Update On', auto_now=True)
     updated_by = models.ForeignKey(User, verbose_name='Update By', null=True, on_delete=models.CASCADE)
     inserted_on = models.DateTimeField(verbose_name='Inserted On', auto_now_add=True)
+    manager = models.Manager()
 
     def __str__(self):
         return self.name
@@ -24,6 +25,7 @@ class Domain(models.Model):
     updated_on = models.DateTimeField(verbose_name='Update On', auto_now=True)
     updated_by = models.ForeignKey(User, verbose_name='Update By', null=True, on_delete=models.CASCADE)
     inserted_on = models.DateTimeField(verbose_name='Inserted On', auto_now_add=True)
+    manager = models.Manager()
 
     def __str__(self):
         return self.name
@@ -41,6 +43,7 @@ class Property(models.Model):
     updated_on = models.DateTimeField(verbose_name='Update On', auto_now=True)
     updated_by = models.ForeignKey(User, verbose_name='Update By', null=True, on_delete=models.CASCADE)
     inserted_on = models.DateTimeField(verbose_name='Inserted On', auto_now_add=True)
+    manager = models.Manager()
 
     def __str__(self):
         return self.name
@@ -61,10 +64,11 @@ class Server(models.Model):
     comments = models.TextField(verbose_name='Comments', max_length=200)
     domain = models.ForeignKey(Domain, verbose_name='Domain', null=True, on_delete=models.CASCADE)
     property = models.ForeignKey(Property, verbose_name='Property', null=True, on_delete=models.CASCADE)
-    application = models.ManyToManyField(Application, verbose_name='Aplications', null=True)
+    application = models.ManyToManyField(Application, verbose_name='Applications', null=True)
     updated_on = models.DateTimeField(verbose_name='Update On', auto_now=True)
     updated_by = models.ForeignKey(User, verbose_name='Update By', null=True, on_delete=models.CASCADE)
     inserted_on = models.DateTimeField(verbose_name='Inserted On', auto_now_add=True)
+    manager = models.Manager()
 
     def __str__(self):
         return self.name

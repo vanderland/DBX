@@ -9,7 +9,7 @@ from .models import Server, Domain, Property, Application
 
 
 def ServerDetail(request, pk):
-    qs_server = Server.objects.filter(pk=pk)
+    qs_server = Server.manager.filter(pk=pk)
 
     server = str(qs_server[0])
     database = 'STOF_DBA'
@@ -30,7 +30,7 @@ class ServerViewAll(ListView):
     context_object_name = 'server_list'
 
     def get_queryset(self):
-        return Server.objects.all()
+        return Server.manager.all()
 
 
 class ServerViewByDomain(ListView):
@@ -40,7 +40,7 @@ class ServerViewByDomain(ListView):
     def get_queryset(self):
         self.domain = get_object_or_404(Domain, id=self.kwargs['pk'])
         print(self.domain)
-        return Server.objects.filter(domain=self.domain)
+        return Server.manager.filter(domain=self.domain)
 
 
 class ServerViewByProperty(ListView):
@@ -49,7 +49,7 @@ class ServerViewByProperty(ListView):
 
     def get_queryset(self):
         self.property = get_object_or_404(Property, id=self.kwargs['pk'])
-        return Server.objects.filter(property=self.property).order_by('name')
+        return Server.manager.filter(property=self.property).order_by('name')
 
 
 class ServerViewByApplication(ListView):
@@ -58,7 +58,7 @@ class ServerViewByApplication(ListView):
 
     def get_queryset(self):
         self.application = get_object_or_404(Application, id=self.kwargs['pk'])
-        return Server.objects.filter(application=self.application).order_by('name')
+        return Server.manager.filter(application=self.application).order_by('name')
 
 
 class ServerDetailView(DetailView):
@@ -68,7 +68,7 @@ class ServerDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['server'] = Server.objects.filter(pk=self.object.pk)
+        context['server'] = Server.manager.filter(pk=self.object.pk)
 
         server = 'SG10-DBAOPS-01'
         database = 'STOF_DBA'
@@ -88,7 +88,7 @@ class ApplicationViewAll(ListView):
     context_object_name = 'application_list'
 
     def get_queryset(self):
-        return Application.objects.all()
+        return Application.manager.all()
 
 
 class DomainViewAll(ListView):
@@ -96,7 +96,7 @@ class DomainViewAll(ListView):
     context_object_name = 'domain_list'
 
     def get_queryset(self):
-        return Domain.objects.all()
+        return Domain.manager.all()
 
 
 class PropertyViewAll(ListView):
@@ -104,4 +104,4 @@ class PropertyViewAll(ListView):
     context_object_name = 'property_list'
 
     def get_queryset(self):
-        return Property.objects.all()
+        return Property.manager.all()
