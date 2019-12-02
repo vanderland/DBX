@@ -15,6 +15,7 @@ urlpatterns = [
     path('application/<int:pk>', ServerViewByApplication.as_view(), name='server_by_application'),
 
     # path('<int:pk>', ServerDetailView.as_view(), name='server_detail'),
-    path('<int:pk>', ServerDetail, name='server_detail'),
+    path('<int:server_id>', ServerDetail, name='server_detail'),
+    path('<int:server_id>/<group>/<int:group_id>', ServerDetail, name='server_detail'),
 
 ]

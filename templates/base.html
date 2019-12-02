@@ -16,17 +16,15 @@
 
 <body>
     <div class="grid-container">
-        <div class="gd_navbar">
+        <div class="gd_main_nav">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class=" navbar-brand" href="#">
-                    <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top"
-                        alt="">
+                    <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
                     SHRSS - DBX
                 </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -62,32 +60,35 @@
         <div class="gd_head">
             {% block ga_head %}{% endblock ga_head %}
         </div>
-        
-        <div class="gd_message ">
-            {% if messages %} 
-                {% block ga_message %}{% endblock ga_message %}
-            {% endif %} 
+
+        <div class="gd_server_nav">
+            {% block ga_server_nav %}{% endblock ga_server_nav %}
         </div>
-        
-        <div class="gd_menu">
-            {% block ga_menu %}{% endblock ga_menu %}
+
+        <div class="gd_left_nav">
+            {% block ga_left_nav %}{% endblock ga_left_nav %}
         </div>
-        
+
         <div class="gd_main">
             {% block ga_main %}{% endblock ga_main %}
         </div>
+
+        <div class="gd_message">
+            {% block ga_message %}{% endblock ga_message %}
+        </div>
+
+        <div class="gd_foot">
+            <p class="">© 2019, SHRSS - Database Administration.</p>
+        </div>
+
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-          <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"</script>
-          <script src="{% static 'js/popper.min.j' %}"</script>
-          <script src="{% static 'js/bootstrap.min.js' %}"</script>
+
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 </body>
-<footer class="footer fixed-bottom m-0 py-2 bg-dark">
-    <div class="col-12">
-        <span class="text-muted">© 2019, SHRSS - Database Administration.</span>
-    </div>
-    </div>
-</footer>
 
 </html>

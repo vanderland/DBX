@@ -5,8 +5,17 @@
   <h5 class="mb-0">Application</h5>
 {% endblock ga_head %}
 
+ {% block ga_message %}
+  {% if messages %}
+    <div class="message" role="alert">
+        {% for message in messages %}
+         <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    </div>
+  {% endif %}
+ {% endblock ga_message %}
 
-{% block ga_menu %}
+{% block ga_left_nav %}
     {% if application_list %}
       <ul class="nav flex-column">
           {% for application in application_list %}
@@ -16,10 +25,9 @@
           {% endfor %}
       </ul>
     {% else %}
-        <p>No server available.</p>
-        
+        <p>No application available.</p>
     {% endif %}   
-{% endblock ga_menu %}
+{% endblock ga_left_nav %}
 
 {% block ga_main %}
   {% lorem 2 b random %}
@@ -27,6 +35,6 @@
   {% lorem 4 p random %}
   <br>
   {% lorem 10 w random %}
-
 {% endblock ga_main %}
+
 

@@ -1,64 +1,83 @@
 $_base-color: #f8f9fa;
 $_border-dark: #343a40;
+$_header-background:#343a40;
+$_header-color:#ffffff;
 
-$_padding: 10px;
+$_padding_md: 10px 10px 10px 10px;
+$_padding_sm: 5px  10px  5px 10px;
 
 
 html { height: 100%; }
 
 body { min-height: 100%; }
 
+p { margin-bottom: 0px;}
+
+.grid-container {
+    display: grid;
+    grid-template-rows: 56px 44px min-content auto 40px; 
+    grid-template-columns: 190px 1fr;
+    grid-template-areas: 
+        'ga_main_nav    ga_main_nav'
+        'ga_head        ga_server_nav'
+        'ga_message     ga_message'
+        'ga_left_nav    ga_main'
+        'ga_foot        ga_foot';
+    height: 100vh;
+    border-right: 1px solid $_border-dark;
+    border-left: 1px solid $_border-dark;
+}
 
 
-.gd_navbar {
-    grid-area: ga_navbar;
+.gd_main_nav {
+    grid-area: ga_main_nav;
     
 }
 
 .gd_head {
     grid-area: ga_head;
     border-bottom: 1px solid $_border-dark;
-    padding: $_padding;
-    // align-content: space-evenly;
+    padding: $_padding_md;
     background-color: #f8f9fa ;
-    
+}
+
+.gd_server_nav {
+    grid-area: ga_server_nav;
+    border-bottom: 1px solid $_border-dark;
+    padding: $_padding_md;
+    background-color: #f8f9fa ;
+}
+
+
+.gd_left_nav {
+    grid-area: ga_left_nav;
+    overflow: auto;
+    padding: $_padding_md;
+    border-right: 1px solid $_border-dark;
 }
 
 .gd_message {
     grid-area: ga_message;
 }
 
-.gd_menu {
-    grid-area: ga_menu;
-    padding: $_padding;
-    border-right: 1px solid $_border-dark;
-    // min-height: 900px;
-    //  background-color: #aadef8 ;
-
-}
-
 .gd_main {
     grid-area: ga_main;
-    padding: $_padding;
-    // min-height: 900px;
+    overflow: auto;
+    padding: $_padding_md;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-rows: 56px 44px 44px auto; 
-    grid-template-columns: 170px 5fr;
-    grid-template-areas: 
-        'ga_navbar  ga_navbar'
-        'ga_head    ga_head'
-        'ga_menu    ga_message'
-        'ga_menu    ga_main';
-   height: 100vh;
-
+.gd_foot {
+    grid-area: ga_foot;
+    padding: $_padding_sm;
+    background-color: $_header-background;
+    color: $_header-color;
 }
+
+
 
 .message {
     border-bottom: 1px solid $_border-dark;
-    padding: $_padding;
+    padding: $_padding_md;
     color: #856404;
     background-color: #fff3cd;
 }

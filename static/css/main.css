@@ -6,59 +6,86 @@ body {
   min-height: 100%;
 }
 
-.gd_navbar {
+p {
+  margin-bottom: 0px;
+}
+
+.grid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 56px 44px min-content auto 40px;
+      grid-template-rows: 56px 44px -webkit-min-content auto 40px;
+      grid-template-rows: 56px 44px min-content auto 40px;
+  -ms-grid-columns: 190px 1fr;
+      grid-template-columns: 190px 1fr;
+      grid-template-areas: 'ga_main_nav    ga_main_nav' 'ga_head        ga_server_nav' 'ga_message     ga_message' 'ga_left_nav    ga_main' 'ga_foot        ga_foot';
+  height: 100vh;
+  border-right: 1px solid #343a40;
+  border-left: 1px solid #343a40;
+}
+
+.gd_main_nav {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
-  grid-area: ga_navbar;
+  grid-area: ga_main_nav;
 }
 
 .gd_head {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
-  -ms-grid-column-span: 2;
   grid-area: ga_head;
   border-bottom: 1px solid #343a40;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   background-color: #f8f9fa;
+}
+
+.gd_server_nav {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: ga_server_nav;
+  border-bottom: 1px solid #343a40;
+  padding: 10px 10px 10px 10px;
+  background-color: #f8f9fa;
+}
+
+.gd_left_nav {
+  -ms-grid-row: 4;
+  -ms-grid-column: 1;
+  grid-area: ga_left_nav;
+  overflow: auto;
+  padding: 10px 10px 10px 10px;
+  border-right: 1px solid #343a40;
 }
 
 .gd_message {
   -ms-grid-row: 3;
-  -ms-grid-column: 2;
-  grid-area: ga_message;
-}
-
-.gd_menu {
-  -ms-grid-row: 3;
-  -ms-grid-row-span: 2;
   -ms-grid-column: 1;
-  grid-area: ga_menu;
-  padding: 10px;
-  border-right: 1px solid #343a40;
+  -ms-grid-column-span: 2;
+  grid-area: ga_message;
 }
 
 .gd_main {
   -ms-grid-row: 4;
   -ms-grid-column: 2;
   grid-area: ga_main;
-  padding: 10px;
+  overflow: auto;
+  padding: 10px 10px 10px 10px;
 }
 
-.grid-container {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 56px 44px 44px auto;
-      grid-template-rows: 56px 44px 44px auto;
-  -ms-grid-columns: 170px 5fr;
-      grid-template-columns: 170px 5fr;
-      grid-template-areas: 'ga_navbar  ga_navbar' 'ga_head    ga_head' 'ga_menu    ga_message' 'ga_menu    ga_main';
-  height: 100vh;
+.gd_foot {
+  -ms-grid-row: 5;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: ga_foot;
+  padding: 5px 10px 5px 10px;
+  background-color: #343a40;
+  color: #ffffff;
 }
 
 .message {
   border-bottom: 1px solid #343a40;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   color: #856404;
   background-color: #fff3cd;
 }
