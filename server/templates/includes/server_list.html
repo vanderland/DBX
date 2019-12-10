@@ -1,0 +1,19 @@
+
+{% if server_list %}
+  <ul class="nav flex-column">
+  {% for selected in server_selected %}
+    {% for server in server_list %}
+    <li class="nav-item">
+      {% if group_type %}
+        <a class="nav-link p-0 {% if  server.name  ==  selected.name  %}text-danger font-weight-bold{% endif %}" href="{% url 'server_all' %}{{ group_type }}/{{ group_id }}/{{ server.id }}" class="">{{server.name}}</a>
+      {% else %}
+        <a class="nav-link p-0 {% if  server.name  ==  selected.name  %}text-danger font-weight-bold{% endif %}" href="{% url 'server_all' %}{{ server.id }}" class="">{{server.name}}</a>
+      {% endif %}
+    </li>
+
+    {% endfor %}
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No server available.</p>
+{% endif %}

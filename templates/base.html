@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <link href="{% static 'css/bootstrap-table.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
@@ -17,44 +19,7 @@
 <body>
     <div class="grid-container">
         <div class="gd_main_nav">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class=" navbar-brand" href="#">
-                    <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-                    SHRSS - DBX
-                </a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="/server/">Servers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/server/domain/">Domains</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/server/property/">Properties</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/server/application/">Applications</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                        </li>
-                    </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
-                </div>
-
-
-
+            {% include 'includes/navbar.html' %}
         </div>
 
         <div class="gd_head">
@@ -80,15 +45,13 @@
         <div class="gd_foot">
             <p class="">© 2019, SHRSS - Database Administration.</p>
         </div>
-
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-    <script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+    <!-- Optional JavaScript -->
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
+    <script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+    
 </body>
 
 </html>

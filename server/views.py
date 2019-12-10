@@ -1,6 +1,8 @@
 import pymssql
+import json
 
-
+# from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -8,32 +10,63 @@ from django.views.generic import ListView, DetailView
 from .models import Server, Domain, Property, Application
 
 
-def ServerDetail(request, server_id, group='', group_id=''):
-    qs_server = Server.manager.filter(pk=server_id)
+def ServerLogs(request, server_id, group_type=None, group_id=None):
 
-    if group == 'domain':
-        server_list = Server.manager.filter(domain=group_id).order_by('name')
-    elif group == 'property':
-        server_list = Server.manager.filter(property=group_id).order_by('name')
-    elif group == 'application':
-        server_list = Server.manager.filter(application=group_id).order_by('name')
-    else:
-        server_list = Server.manager.all().order_by('name')
-    
+    server_selected = Server.manager.filter(pk=server_id)
 
+    server_list = GetServerList(group_type=group_type, group_id=group_id)
 
-    server = str(qs_server[0])
+    server = str(server_selected[0])
+
     database = 'STOF_DBA'
+    query = '''
+        DECLARE 
+            @ErrorLog TABLE(LogID int identity(1, 1) not null primary key, 
+            LogDate datetime null, 
+            ProcessInfo NVARCHAR(100) null, 
+            LogText NVARCHAR(4000) null); 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 0, 1; 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 0, 2; 
+        SELECT 
+            CONVERT(varchar, LogDate, 114)  as date, 
+            ProcessInfo as process, 
+            LogText as log 
+        FROM @ErrorLog 
+        WHERE ProcessInfo != \'Backup\' 
+        ORDER BY LogDate DESC;'''
     try:
         conn = pymssql.connect(server=server, database=database, as_dict=True)
         cursor = conn.cursor()
-        cursor.execute('SELECT @@VERSION as version;')
-        results = cursor.fetchall()
-        return render(request, 'server/server_detail.html', context={'server_id': server_id, 'server': server, 'server_list': server_list, 'results': results},)
+        cursor.execute(query)
+
+        logs = json.dumps(cursor.fetchall())
+
+        return render(request, 'server/server_logs.html', context={
+            'group_type': group_type,
+            'group_id': group_id,
+            'server_selected': server_selected,
+            'server_list': server_list,
+            'logs': logs},)
     except Exception as err:
         messages.error(request, str(err), extra_tags='error')
-        # messages.error(request, 'server not found!!!')
-        return render(request, 'server/server_detail.html', context={'server_id': server_id, 'server': server, 'server_list': server_list},)
+        return render(request, 'server/server_logs.html', context={
+            'group_type': group_type,
+            'group_id': group_id,
+            'server_selected': server_selected,
+            'server_list': server_list},)
+
+
+def ServerDetail(request, server_id, group_type=None, group_id=None):
+
+    server_selected = Server.manager.filter(pk=server_id)
+
+    server_list = GetServerList(group_type=group_type, group_id=group_id)
+
+    return render(request, 'server/server_detail.html', context={
+        'group_type': group_type,
+        'group_id': group_id,
+        'server_selected': server_selected,
+        'server_list': server_list},)
 
 
 class ServerViewAll(ListView):
@@ -52,12 +85,13 @@ class ServerViewByDomain(ListView):
         self.domain = get_object_or_404(Domain, id=self.kwargs['pk'])
         return Server.manager.filter(domain=self.domain).order_by('name')
 
-    def get_context_data(self,**kwargs):
-        context = super(ServerViewByDomain,self).get_context_data(**kwargs)
-        context['server_list'] =  Server.manager.filter(domain=self.domain).order_by('name')
-        context['group'] =  'domain'
+    def get_context_data(self, **kwargs):
+        context = super(ServerViewByDomain, self).get_context_data(**kwargs)
+        context['server_list'] = Server.manager.filter(domain=self.domain).order_by('name')
+        context['group_type'] = 'domain'
         context['group_id'] = self.kwargs['pk']
         return context
+
 
 class ServerViewByProperty(ListView):
     template_name = 'server/server.html'
@@ -67,12 +101,13 @@ class ServerViewByProperty(ListView):
         self.property = get_object_or_404(Property, id=self.kwargs['pk'])
         return Server.manager.filter(property=self.property).order_by('name')
 
-    def get_context_data(self,**kwargs):
-        context = super(ServerViewByProperty,self).get_context_data(**kwargs)
-        context['server_list'] =  Server.manager.filter(property=self.property).order_by('name')
-        context['group'] =  'property'
+    def get_context_data(self, **kwargs):
+        context = super(ServerViewByProperty, self).get_context_data(**kwargs)
+        context['server_list'] = Server.manager.filter(property=self.property).order_by('name')
+        context['group_type'] = 'property'
         context['group_id'] = self.kwargs['pk']
         return context
+
 
 class ServerViewByApplication(ListView):
     template_name = 'server/server.html'
@@ -82,33 +117,12 @@ class ServerViewByApplication(ListView):
         self.application = get_object_or_404(Application, id=self.kwargs['pk'])
         # return Server.manager.filter(application=self.application).order_by('name')
 
-    def get_context_data(self,**kwargs):
-        context = super(ServerViewByApplication,self).get_context_data(**kwargs)
-        context['server_list'] =  Server.manager.filter(application=self.application).order_by('name')
-        context['group'] =  'application'
+    def get_context_data(self, **kwargs):
+        context = super(ServerViewByApplication, self).get_context_data(**kwargs)
+        context['server_list'] = Server.manager.filter(application=self.application).order_by('name')
+        context['group_type'] = 'application'
         context['group_id'] = self.kwargs['pk']
         return context
-
-# class ServerDetailView(DetailView):
-#     model = Server
-#     # template_name = 'server/server_detail.html'
-#     # context_object_name = 'server_detail'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['server'] = Server.manager.filter(pk=self.object.pk)
-
-#         server = 'SG10-DBAOPS-01'
-#         database = 'STOF_DBA'
-#         conn = pymssql.connect(server=server, database=database, as_dict=True)
-
-#         cursor = conn.cursor()
-#         cursor.execute(
-#             'SELECT [Log_ID], [Log_Date], [Log_Source], [Log_Status], [Log_Message] FROM [log].[VDS_Archive_Log];')
-
-#         results = cursor.fetchall()
-#         # return render(request, 'server/server_detail.html', context={'results': results},)
-#         return results
 
 
 class ApplicationViewAll(ListView):
@@ -133,3 +147,15 @@ class PropertyViewAll(ListView):
 
     def get_queryset(self):
         return Property.manager.all()
+
+
+def GetServerList(group_type=None, group_id=None):
+    if group_type == 'domain':
+        server_list = Server.manager.filter(domain=group_id).order_by('name')
+    elif group_type == 'property':
+        server_list = Server.manager.filter(property=group_id).order_by('name')
+    elif group_type == 'application':
+        server_list = Server.manager.filter(application=group_id).order_by('name')
+    else:
+        server_list = Server.manager.all().order_by('name')
+    return server_list

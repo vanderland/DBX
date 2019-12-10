@@ -1,0 +1,12 @@
+<div class="mb-0">
+  <ul class="nav">
+    <li class="nav-item">
+      {% if group_type %}
+      <a class="nav-link p-0 active" href="{% url 'server_all' %}{{ group_type }}/{{ group_id }}/{% for server in server_selected %}{{ server.id }}{% endfor %}/logs"
+        class="">Logs</a>
+      {% else %}
+      <a class="nav-link p-0 active" href="{% url 'server_all' %}{% for server in server_selected %}{{ server.id }}{% endfor %}/logs" class="">Logs</a>
+      {% endif %}
+    </li>
+  </ul>
+</div>

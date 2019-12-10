@@ -1,6 +1,15 @@
 from django.urls import path
 
-from .views import ServerViewAll, ServerViewByDomain, ServerViewByProperty, ServerViewByApplication, DomainViewAll, PropertyViewAll, ApplicationViewAll, ServerDetail
+from .views import (
+    ServerViewAll,
+    ServerViewByDomain,
+    ServerViewByProperty,
+    ServerViewByApplication,
+    DomainViewAll,
+    PropertyViewAll,
+    ApplicationViewAll,
+    ServerDetail,
+    ServerLogs)
 
 
 urlpatterns = [
@@ -16,6 +25,9 @@ urlpatterns = [
 
     # path('<int:pk>', ServerDetailView.as_view(), name='server_detail'),
     path('<int:server_id>', ServerDetail, name='server_detail'),
-    path('<int:server_id>/<group>/<int:group_id>', ServerDetail, name='server_detail'),
+    path('<group_type>/<int:group_id>/<int:server_id>', ServerDetail, name='server_detail'),
+
+    path('<int:server_id>/logs', ServerLogs, name='server_logs'),
+    path('<group_type>/<int:group_id>/<int:server_id>/logs', ServerLogs, name='server_logs'),
 
 ]
