@@ -27,7 +27,7 @@ urlpatterns = [
     path('<int:server_id>', ServerDetail, name='server_detail'),
     path('<group_type>/<int:group_id>/<int:server_id>', ServerDetail, name='server_detail'),
 
-    path('<int:server_id>/logs', ServerLogs, name='server_logs'),
-    path('<group_type>/<int:group_id>/<int:server_id>/logs', ServerLogs, name='server_logs'),
+    path('<int:server_id>/<log_type>', ServerLogs, name='server_logs'),
+    path('<group_type>/<int:group_id>/<int:server_id>/<log_type>', ServerLogs, name='server_logs'),
 
 ]

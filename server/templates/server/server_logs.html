@@ -2,44 +2,41 @@
 {% block title %}Server Logs{% endblock title%}
 
 {% block ga_head %}
-  {% include 'includes\server_head.html' %}
+{% include 'includes\server_head.html' %}
 {% endblock ga_head %}
 
 {% block ga_server_nav %}
-  {% include 'includes\server_nav.html' %}
+{% include 'includes\server_nav.html' %}
 {% endblock ga_server_nav %}
 
 {% block ga_left_nav %}
-  {% include 'includes\server_list.html' %}
+{% include 'includes\server_list.html' %}
 {% endblock ga_left_nav %}
 
 {% block ga_message %}
-  {% include 'includes\server_message.html' %}
+{% include 'includes\server_message.html' %}
 {% endblock ga_message %}
 
 
 {% block ga_main %}
 {% if logs %}
 
-{% comment %} {{ results }} {% endcomment %}
-
-<table class="table table-bordered table-sm"
-  id="table"
-  data-toggle="table"
-  data-search="true"
-  data-trim-on-search="false"
+<table 
+  class="table table-bordered table-sm" 
+  id="table" 
+  data-toggle="table" 
+  data-search="true" 
+  data-trim-on-search="false" 
   data-pagination="true"
-  data-page-list="[15, 30, 60, 100, 200, All]"
-  data-page-size="15"
-  data-pagination-v-align="top"
-
->
+  data-page-list="[15, 30, 60, 100, 200, All]" 
+  data-page-size="15" 
+  data-pagination-v-align="top">
 
   <thead class="thead-light">
     <tr>
-      <th data-field="date" data-sortable="true">date</th>
-      <th data-field="process" data-sortable="true">process</th>
-      <th data-field="log" data-sortable="true">log</th>
+      <th data-field="date" data-sortable="true">Time</th>
+      <th data-field="process" data-sortable="true">Process</th>
+      <th data-field="log" data-sortable="true">Log</th>
     </tr>
   </thead>
 </table>
@@ -47,10 +44,12 @@
 <script>
   var $table = $('#table')
 
-  $(function() {
-    var data = {{ logs|safe }} 
+  $(function () {
+    var data = {{ logs | safe }}
 
-    $table.bootstrapTable({data: data})
+    $table.bootstrapTable({
+      data: data
+    })
   })
 </script>
 

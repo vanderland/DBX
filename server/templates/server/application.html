@@ -2,39 +2,37 @@
 {% block title %}Application{% endblock title%}
 
 {% block ga_head %}
-  <h5 class="mb-0">Application</h5>
+<h5 class="mb-0">Application</h5>
 {% endblock ga_head %}
 
- {% block ga_message %}
-  {% if messages %}
-    <div class="message" role="alert">
-        {% for message in messages %}
-         <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    </div>
-  {% endif %}
- {% endblock ga_message %}
+{% block ga_message %}
+{% if messages %}
+<div class="message" role="alert">
+  {% for message in messages %}
+  <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock ga_message %}
 
 {% block ga_left_nav %}
-    {% if application_list %}
-      <ul class="nav flex-column">
-          {% for application in application_list %}
-                <li class="nav-item">
-                  <a class="nav-link p-0 active"href="{% url 'application_all' %}{{ application.id }}" class="">{{application.name}}</a>
-              </li>
-          {% endfor %}
-      </ul>
-    {% else %}
-        <p>No application available.</p>
-    {% endif %}   
+{% if application_list %}
+<ul class="nav flex-column">
+  {% for application in application_list %}
+  <li class="nav-item">
+    <a class="nav-link p-0 active" href="{% url 'application_all' %}{{ application.id }}" class="">{{application.name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No application available.</p>
+{% endif %}
 {% endblock ga_left_nav %}
 
 {% block ga_main %}
-  {% lorem 2 b random %}
-  <br>
-  {% lorem 4 p random %}
-  <br>
-  {% lorem 10 w random %}
+{% lorem 2 b random %}
+<br>
+{% lorem 4 p random %}
+<br>
+{% lorem 10 w random %}
 {% endblock ga_main %}
-
-

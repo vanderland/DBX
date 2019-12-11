@@ -2,34 +2,33 @@
 {% block title %}Property{% endblock title%}
 
 {% block ga_head %}
-  <h5 class="mb-0">Property</h5>
+<h5 class="mb-0">Property</h5>
 {% endblock ga_head %}
 
- {% block ga_message %}
-  {% if messages %}
-    <div class="message" role="alert">
-        {% for message in messages %}
-         <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    </div>
-  {% endif %}
- {% endblock ga_message %}
+{% block ga_message %}
+{% if messages %}
+<div class="message" role="alert">
+  {% for message in messages %}
+  <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock ga_message %}
 
 {% block ga_left_nav %}
-    {% if property_list %}
-      <ul class="nav flex-column">
-          {% for property in property_list %}
-                <li class="nav-item">
-                  <a class="nav-link p-0 active"href="{% url 'property_all' %}{{ property.id }}" class="">{{property.name}}</a>
-              </li>
-          {% endfor %}
-      </ul>
-    {% else %}
-        <p>No property available.</p>
-    {% endif %}   
+{% if property_list %}
+<ul class="nav flex-column">
+  {% for property in property_list %}
+  <li class="nav-item">
+    <a class="nav-link p-0 active" href="{% url 'property_all' %}{{ property.id }}" class="">{{property.name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No property available.</p>
+{% endif %}
 {% endblock ga_left_nav %}
 
 {% block ga_main %}
 
 {% endblock ga_main %}
-

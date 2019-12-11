@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView
 from .models import Server, Domain, Property, Application
 
 
-def ServerLogs(request, server_id, group_type=None, group_id=None):
+def ServerLogs(request, server_id, log_type, group_type=None, group_id=None):
 
     server_selected = Server.manager.filter(pk=server_id)
 
@@ -19,21 +19,47 @@ def ServerLogs(request, server_id, group_type=None, group_id=None):
     server = str(server_selected[0])
 
     database = 'STOF_DBA'
-    query = '''
+
+    if log_type == 'server':
+        query = '''
         DECLARE 
             @ErrorLog TABLE(LogID int identity(1, 1) not null primary key, 
             LogDate datetime null, 
             ProcessInfo NVARCHAR(100) null, 
             LogText NVARCHAR(4000) null); 
-        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 0, 1; 
-        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 0, 2; 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 1, 1; 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 2, 1; 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 3, 1; 
+        INSERT INTO @ErrorLog(LogDate, ProcessInfo, LogText)  EXEC master..xp_readerrorlog 4, 1; 
         SELECT 
-            CONVERT(varchar, LogDate, 114)  as date, 
+            CONVERT(varchar, LogDate, 126)  as date, 
             ProcessInfo as process, 
             LogText as log 
         FROM @ErrorLog 
         WHERE ProcessInfo != \'Backup\' 
+        AND  DATEDIFF(HOUR,LogDate, GETDATE()) < 48
         ORDER BY LogDate DESC;'''
+    elif log_type == 'agent':
+        query = '''
+        DECLARE 
+            @ErrorLog TABLE(LogID int identity(1, 1) not null primary key, 
+            LogDate datetime null, 
+            ErrorLevel NVARCHAR(100) null, 
+            Text NVARCHAR(4000) null); 
+        INSERT INTO @ErrorLog(LogDate, ErrorLevel, Text)  EXEC master..xp_readerrorlog 1, 2; 
+        INSERT INTO @ErrorLog(LogDate, ErrorLevel, Text)  EXEC master..xp_readerrorlog 2, 2; 
+        INSERT INTO @ErrorLog(LogDate, ErrorLevel, Text)  EXEC master..xp_readerrorlog 3, 2; 
+        INSERT INTO @ErrorLog(LogDate, ErrorLevel, Text)  EXEC master..xp_readerrorlog 4, 2; 
+        SELECT 
+            CONVERT(varchar, LogDate, 126)  as date, 
+            ErrorLevel as process, 
+            Text as log 
+        FROM @ErrorLog 
+        WHERE DATEDIFF(HOUR,LogDate, GETDATE()) < 96
+        ORDER BY LogDate DESC;'''
+    else:
+        query = ''
+
     try:
         conn = pymssql.connect(server=server, database=database, as_dict=True)
         cursor = conn.cursor()

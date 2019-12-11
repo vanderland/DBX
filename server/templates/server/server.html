@@ -2,38 +2,33 @@
 {% block title %}Server{% endblock title%}
 
 {% block ga_head %}
-  <h5 class="mb-0">Server</h5>
+<h5 class="mb-0">Server</h5>
 {% endblock ga_head %}
 
- {% block ga_message %}
-  {% if messages %}
-    <div class="message" role="alert">
-        {% for message in messages %}
-         <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-        {% endfor %}
-    </div>
-  {% endif %}
- {% endblock ga_message %}
+{% block ga_message %}
+{% if messages %}
+<div class="message" role="alert">
+  {% for message in messages %}
+  <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock ga_message %}
 
 {% block ga_left_nav %}
-    {% if server_list %}
-      <ul class="nav flex-column">
-          {% for server in server_list %}
-                <li class="nav-item">
-                {% if group_type %}                
-                  <a class="nav-link p-0 active"href="{% url 'server_all' %}{{ group_type }}/{{ group_id }}/{{ server.id }}" class="">{{server.name}}</a>
-                {% else %}
-                  <a class="nav-link p-0 active"href="{% url 'server_all' %}{{ server.id }}" class="">{{server.name}}</a>
-                {% endif %}
-              </li>
-          {% endfor %}
-      </ul>
-    {% else %}
-        <p>No server available.</p>
-    {% endif %}   
+{% if server_list %}
+<ul class="nav flex-column">
+  {% for server in server_list %}
+  <li class="nav-item">
+    <a class="nav-link p-0 active" href="{% url 'server_all' %}{% if group_type %}{{ group_type }}/{{ group_id }}/{% endif %}{{ server.id }}" class="">{{server.name}}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No server available.</p>
+{% endif %}
 {% endblock ga_left_nav %}
 
 {% block ga_main %}
 
 {% endblock ga_main %}
-
