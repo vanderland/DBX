@@ -88,7 +88,25 @@ def ServerDetail(request, server_id, group_type=None, group_id=None):
 
     server_list = GetServerList(group_type=group_type, group_id=group_id)
 
+    server = str(server_selected[0])
+
+    database = 'STOF_DBA'
+
+    query = '''
+        SELECT 
+            blocking_count = (SELECT COUNT(*) FROM sys.dm_exec_requests WHERE blocking_session_id <> 0),
+            connection_count = (SELECT COUNT(*) FROM  sys.sysprocesses),
+            last_reboot_date = (SELECT CONVERT(NVARCHAR, sqlserver_start_time, 100)  FROM sys.dm_os_sys_info),
+            last_reboot_days = (SELECT DATEDIFF(DAY, sqlserver_start_time, GETDATE())  FROM sys.dm_os_sys_info)'''
+
+    conn = pymssql.connect(server=server, database=database, as_dict=True)
+    cursor = conn.cursor()
+    cursor.execute(query)
+
+    server_detail = cursor.fetchall()
+
     return render(request, 'server/server_detail.html', context={
+        'server_detail': server_detail,
         'group_type': group_type,
         'group_id': group_id,
         'server_selected': server_selected,
